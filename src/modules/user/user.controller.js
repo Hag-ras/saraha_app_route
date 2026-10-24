@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { successResponse } from "../../common/utils/index.js";
 import { profile, rotate, update } from "./user.service.js";
-import { authentication } from "../../middleware/authentication.middleware.js";
+import { authentication, authorization } from "../../middleware/authentication.middleware.js";
 import { tokenTypeEnum } from "../../common/enum/token.enum.js";
+import { RoleEnum } from "../../common/enum/user.enum.js";
 
 const router = Router()
 
@@ -11,8 +12,8 @@ router.get('/',authentication(), async(req, res, next)=>{
     return successResponse({res,data})
 })
 
-router.patch('/', authentication(), async(req, res, next)=>{
-    const data = await update(req.account.id, req.body)
+router.patch('/:id', authentication(),authorization(RoleEnum.USER), async(req, res, next)=>{
+    const data = await update(req.params, req.body)
     return successResponse({res,data})
 })
 

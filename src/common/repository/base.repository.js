@@ -168,7 +168,7 @@ export const findOneAndUpdate = async ({
 export const findByIdAndUpdate = async ({
   id,
   update,
-  options = { new: true },
+  options = { returnDocument: 'after' },
   model
 
 }) => {

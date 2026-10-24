@@ -1,5 +1,5 @@
 import { tokenTypeEnum } from "../common/enum/token.enum.js"
-import { UnauthorizedException } from "../common/exceptions/error.exception.js"
+import { ForbiddenException, UnauthorizedException } from "../common/exceptions/error.exception.js"
 import { decodeToken } from "../common/security/token.security.js"
 
 export const authentication = (tokenType= tokenTypeEnum.ACCESS)=>{
@@ -32,8 +32,9 @@ export const authentication = (tokenType= tokenTypeEnum.ACCESS)=>{
 
 export const authorization = (accessRole)=>{
     return async(req,res,next)=>{
-        if(req.user.role < accessRole){
-
+        if(req.account.role < accessRole){
+            throw ForbiddenException('forbidden account')
         }
+        next()
     }
 }

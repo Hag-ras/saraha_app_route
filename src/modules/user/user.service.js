@@ -2,13 +2,14 @@ import { ConflictException } from "../../common/exceptions/error.exception.js"
 import { findByIdAndUpdate } from "../../common/repository/base.repository.js"
 import { createLoginCredintials } from "../../common/security/token.security.js"
 import { ACCESS_TOKEN_EXPIRES_IN} from "../../config.js"
+import { UserModel } from "../../DB/model/user.model.js"
 
 export const profile = async(account)=>{
     return account
 }
 
 export const update = async({id},inputs)=>{
-    const account = await findByIdAndUpdate({id,inputs
+    const account = await findByIdAndUpdate({id,update:inputs,model:UserModel
     })
     return account
 }
